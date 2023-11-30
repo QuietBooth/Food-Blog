@@ -5,8 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('meal-modal');
     const closeModalButton = document.getElementById('close-modal-button');
 
-
-
     const allCategoriesUrl = 'https://www.themealdb.com/api/json/v1/1/categories.php';
 
     let allMeals = [];
@@ -122,14 +120,25 @@ window.addEventListener('load', displayRandomMeal);
 
     function displayMeals(meals) {
         categoriesContainer.innerHTML = '';
-
+    
         meals.forEach(meal => {
             const mealCard = createMealCard(meal);
             categoriesContainer.innerHTML += mealCard;
-            categoriesContainer.style.display="grid"
         });
-
-
+    
+        // Display the categories container
+        categoriesContainer.style.display = "grid";
+    
+        // Focus on the categories container after displaying meals
+        categoriesContainer.focus();
+    
+        // Scroll to the categories container
+        categoriesContainer.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        });
+    
+        // Attach click event listeners to the meal cards
         document.querySelectorAll('.meal-card').forEach(card => {
             card.addEventListener('click', () => {
                 const mealId = card.getAttribute('data-meal-id');
@@ -137,7 +146,6 @@ window.addEventListener('load', displayRandomMeal);
             });
         });
     }
-
 
     async function openModal(mealId) {
         const mealDetailsUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`;
