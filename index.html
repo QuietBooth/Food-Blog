@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="nav-bar" >
+            <div id="home-logo">
+                <img src="./assets/chef.png" alt="">
+            </div>
+            <div class="search-div" >
+                <input id="search-input" type="text" placeholder="Enter the Category">
+                <button id="search-button" >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                    </svg>
+                </button>
+            </div>
+            <nav>
+                <ul>
+                    <li id="nav-bg-2" ><a href="https://www.allrecipes.com/recipes/1642/everyday-cooking/" target="_blank" >Recipes</a></li>
+                    <li id="nav-bg-3" ><a href="https://main--nivaash-portfolio.netlify.app/" target="_blank" >About</a></li>
+                    <li id="nav-bg-1" ><a href="#Home-content">Home</a></li>
+                </ul>
+            </nav>
+            <div id="mini-msg" >
+                <a href="https://youtu.be/zhI7bQyTmHw?feature=shared" target="_blank" >
+                    <img href="#" src="./assets/HomeMsg.png" alt="">
+                </a>
+            </div>
+        </div>
+        <center>
+            <div class="info-container" >
+                <div class="info" >
+                    <div class="home-content" id="Home-content" >
+                        <h1>
+                            Let him Cook !
+                        </h1>
+                        <div id="home-pic-area" >
+                            <img id="chef-1" src="./assets/chef1.png" alt="">
+                            <ul>
+                                <li>Explore the World of  Food Recipes and Make the food on your Own .</li>
+                                <li>Make Sure you got all the Ingredients Before Making the Dish .</li>
+                                <li>Follow Each Step and Make Tasty and Delicate Food for Family and Friends .</li>
+                            </ul>
+                            <img id="chef-2" src="./assets/chef2.png" alt="">
+                        </div>
+                        <div id="let-cook" >
+                            <a href="#content-container">Let's Cook</a>
+                            <img src="./assets/materials.png" width="80px">
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </center>
+    </div>
+    
+    <center>
+        <div id="content-container">
+            <div class="random-meal-container" >
+                <div>
+                    <h2 style="color: white;font-family: 'Kaushan Script', cursive;font-size: 40px;" >Meal of the Day</h2>
+                </div>
+                <div id="random-meal">
+                    
+                </div>
+            </div>
+            <center>
+                <div>
+                    <h2 style="font-family: 'Kaushan Script', cursive;font-size: 35px;padding-top: 50px;padding-bottom: 80px;color: white;" >Search Results :</h2>
+                </div>
+                <div id="categories-container">
+                    <div class="meal-card">
+                        <img id="images" src="" alt="">
+                        <h2 id="title"></h2>
+                    </div>
+                </div>
+            </center>
+    </center>
+    <center>
+        <div id="meal-modal" class="modal">
+            <div class="backdrop"></div>
+            <div class="modal-content centered-modal">
+                <span id="close-modal-button" class="close">&times;</span>
+                <div id="modal-content-container">
+                    <div class="popup__photo">
+                        <img id="modal-image" src="" alt="">
+                    </div>
+                    <div class="popup__text">
+                        <h1 id="modal-title">Lorem ipsum dolor sit amet</h1>
+                        <h3>Ingredients:</h3>
+                        <ul id="modal-ingredients"></ul>
+                        <h3>Instructions:</h3>
+                        <p id="modal-instructions"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+    
+    
+</body>
+<script src="app.js" ></script>
+</html>
