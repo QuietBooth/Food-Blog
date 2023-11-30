@@ -126,19 +126,16 @@ window.addEventListener('load', displayRandomMeal);
             categoriesContainer.innerHTML += mealCard;
         });
     
-        // Display the categories container
         categoriesContainer.style.display = "grid";
-    
-        // Focus on the categories container after displaying meals
+        
         categoriesContainer.focus();
-    
-        // Scroll to the categories container
+
         categoriesContainer.scrollIntoView({
             behavior: 'smooth',
             block: 'start',
         });
     
-        // Attach click event listeners to the meal cards
+
         document.querySelectorAll('.meal-card').forEach(card => {
             card.addEventListener('click', () => {
                 const mealId = card.getAttribute('data-meal-id');
