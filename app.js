@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('meal-modal');
     const closeModalButton = document.getElementById('close-modal-button');
 
+
+
     const allCategoriesUrl = 'https://www.themealdb.com/api/json/v1/1/categories.php';
 
     let allMeals = [];
@@ -124,6 +126,7 @@ window.addEventListener('load', displayRandomMeal);
         meals.forEach(meal => {
             const mealCard = createMealCard(meal);
             categoriesContainer.innerHTML += mealCard;
+            categoriesContainer.style.display="grid"
         });
 
 
