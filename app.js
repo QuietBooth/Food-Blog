@@ -10,6 +10,53 @@ document.addEventListener('DOMContentLoaded', () => {
     let allMeals = [];
     let searchedMeals = []; 
 
+    async function openModal(mealId) {
+        const mealDetailsUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`;
+
+        try {
+            const response = await fetch(mealDetailsUrl);
+            const data = await response.json();
+
+            if (data.meals && data.meals.length > 0) {
+                const meal = data.meals[0];
+
+
+                document.getElementById('modal-image').src = meal.strMealThumb;
+                document.getElementById('modal-title').textContent = meal.strMeal;
+                document.getElementById('modal-ingredients').innerHTML = getIngredientsList(meal);
+                document.getElementById('modal-instructions').textContent = meal.strInstructions;
+
+
+                modal.style.display = 'block';
+            } else {
+                console.error('Meal details not found.');
+            }
+        } catch (error) {
+            console.error('Error fetching meal details:', error);
+        }
+    }
+
+
+    function getIngredientsList(meal) {
+        let ingredientsList = '';
+        for (let i = 1; i <= 20; i++) {
+            const ingredient = meal[`strIngredient${i}`];
+            const measure = meal[`strMeasure${i}`];
+
+            if (ingredient && measure) {
+                ingredientsList += `<li>${measure} ${ingredient}</li>`;
+            }
+        }
+        return ingredientsList;
+    }
+
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+
+    closeModalButton.addEventListener('click', closeModal);
 
     fetch(allCategoriesUrl)
         .then(response => response.json())
@@ -77,19 +124,41 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 // Function to display a random meal on the page
+async function displayRandomMealDetails(mealId) {
+    const mealDetailsUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`;
+
+    try {
+        const response = await fetch(mealDetailsUrl);
+        const data = await response.json();
+
+        if (data.meals && data.meals.length > 0) {
+            const meal = data.meals[0];
+
+            document.getElementById('modal-image').src = meal.strMealThumb;
+            document.getElementById('modal-title').textContent = meal.strMeal;
+            document.getElementById('modal-ingredients').innerHTML = getIngredientsList(meal);
+            document.getElementById('modal-instructions').textContent = meal.strInstructions;
+
+            modal.style.display = 'block';
+        } else {
+            console.error('Meal details not found.');
+        }
+    } catch (error) {
+        console.error('Error fetching meal details:', error);
+    }
+}
+
 async function displayRandomMeal() {
     const resultContainer = document.getElementById('random-meal');
-
 
     resultContainer.innerHTML = '';
 
     try {
         const meal = await fetchRandomMeal();
 
-
         if (meal) {
             resultContainer.innerHTML = `
-                <div>
+                <div onclick="displayRandomMealDetails('${meal.idMeal}')">
                     <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
                     <br>
                     <span>--------------------------</span>
@@ -105,6 +174,8 @@ async function displayRandomMeal() {
 }
 
 
+
+
 window.addEventListener('load', displayRandomMeal);
 
     function createMealCard(meal) {
@@ -117,7 +188,7 @@ window.addEventListener('load', displayRandomMeal);
         `;
     }
 
-
+    
     function displayMeals(meals) {
         categoriesContainer.innerHTML = '';
     
@@ -144,53 +215,7 @@ window.addEventListener('load', displayRandomMeal);
         });
     }
 
-    async function openModal(mealId) {
-        const mealDetailsUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`;
 
-        try {
-            const response = await fetch(mealDetailsUrl);
-            const data = await response.json();
-
-            if (data.meals && data.meals.length > 0) {
-                const meal = data.meals[0];
-
-
-                document.getElementById('modal-image').src = meal.strMealThumb;
-                document.getElementById('modal-title').textContent = meal.strMeal;
-                document.getElementById('modal-ingredients').innerHTML = getIngredientsList(meal);
-                document.getElementById('modal-instructions').textContent = meal.strInstructions;
-
-
-                modal.style.display = 'block';
-            } else {
-                console.error('Meal details not found.');
-            }
-        } catch (error) {
-            console.error('Error fetching meal details:', error);
-        }
-    }
-
-
-    function getIngredientsList(meal) {
-        let ingredientsList = '';
-        for (let i = 1; i <= 20; i++) {
-            const ingredient = meal[`strIngredient${i}`];
-            const measure = meal[`strMeasure${i}`];
-
-            if (ingredient && measure) {
-                ingredientsList += `<li>${measure} ${ingredient}</li>`;
-            }
-        }
-        return ingredientsList;
-    }
-
-
-    function closeModal() {
-        modal.style.display = 'none';
-    }
-
-
-    closeModalButton.addEventListener('click', closeModal);
 
 
     async function fetchMealsByCategory(category) {
