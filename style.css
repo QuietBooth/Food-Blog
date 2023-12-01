@@ -74,6 +74,11 @@ body{
     transform: scale(1.2);
 }
 
+#search-input:hover{
+    -webkit-box-shadow: 0 0 12px rgb(255,235,0,1);
+    box-shadow: 0 0 12px rgb(255,235,0,1);
+    
+}
 #search-input{
     width: 220px;
     height: 40px;
@@ -81,12 +86,11 @@ body{
     text-indent: 10px;
     border: 1px solid rgb(255, 255, 255);
     border-radius: 1px 0px 0px 1px;
-    background-color: rgba(25, 22, 33, 1);
-    color: yellow;
+    background: linear-gradient(to right , rgba(206, 191, 4, 1),rgba(194, 136, 44, 1));
 }
 
 ::placeholder{
-    color: whitesmoke;
+    color: rgb(25, 17, 45);
 }
 
 
@@ -95,7 +99,14 @@ body{
     height: 40px;
     border: 1px solid white;
     border-radius: 0px 1px 1px 0px;
-    background-color: rgba(25, 22, 33, 1);
+    background: linear-gradient(to right , rgba(206, 191, 4, 1),rgba(194, 136, 44, 1));
+}
+
+
+#search-button:hover{
+    -webkit-box-shadow: 0 0 12px rgb(255,235,0,1);
+    box-shadow: 0 0 12px rgb(255,235,0,1);
+
 }
 
 #mini-msg{
