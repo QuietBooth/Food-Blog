@@ -434,7 +434,7 @@ nav{
 
 
 .modal {
-    background-image: url('./assets/LONGBG.png');
+    background: rgb(34, 18, 83);
     background-size: cover;
     background-repeat: no-repeat;
     box-shadow: 1px 1px 1px 1px rgb(58, 58, 58);
@@ -776,7 +776,7 @@ footer small {
     }
 
     .modal {
-        background-image: url('./assets/LONGBG.png');
+        background: rgb(34, 18, 83);
         background-size: cover;
         background-repeat: no-repeat;
         box-shadow: 1px 1px 1px 1px rgb(58, 58, 58);
@@ -824,7 +824,6 @@ footer small {
         overflow-y: auto;
         padding: 2rem;
         box-sizing: border-box;
-        background-color: rgba(0, 0, 0, 0.5);
         text-align: start;
     }
 
