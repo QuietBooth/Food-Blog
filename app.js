@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchButton = document.getElementById('search-button');
     const modal = document.getElementById('meal-modal');
     const closeModalButton = document.getElementById('close-modal-button');
+    const resultContainer = document.getElementById('random-meal');
 
     const allCategoriesUrl = 'https://www.themealdb.com/api/json/v1/1/categories.php';
 
@@ -20,12 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.meals && data.meals.length > 0) {
                 const meal = data.meals[0];
 
-
                 document.getElementById('modal-image').src = meal.strMealThumb;
                 document.getElementById('modal-title').textContent = meal.strMeal;
                 document.getElementById('modal-ingredients').innerHTML = getIngredientsList(meal);
                 document.getElementById('modal-instructions').textContent = meal.strInstructions;
-
 
                 modal.style.display = 'block';
             } else {
@@ -35,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error fetching meal details:', error);
         }
     }
-
 
     function getIngredientsList(meal) {
         let ingredientsList = '';
@@ -50,11 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return ingredientsList;
     }
 
-
     function closeModal() {
         modal.style.display = 'none';
     }
-
 
     closeModalButton.addEventListener('click', closeModal);
 
@@ -65,118 +61,99 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error fetching all categories:', error));
 
-
     searchButton.addEventListener('click', async () => {
         const searchTerm = searchInput.value.toLowerCase();
         searchedMeals = await fetchMealsByCategory(searchTerm);
 
-
         searchInput.value = '';
-
 
         displayMeals(searchedMeals);
     });
 
     searchInput.addEventListener('keydown', async (event) => {
         if (event.key === 'Enter') {
-
             event.preventDefault();
     
             const searchTerm = searchInput.value.toLowerCase();
             searchedMeals = await fetchMealsByCategory(searchTerm);
     
-
             searchInput.value = '';
-
+    
             displayMeals(searchedMeals);
         }
     });
-    
-
-    searchButton.addEventListener('click', async () => {
-        const searchTerm = searchInput.value.toLowerCase();
-        searchedMeals = await fetchMealsByCategory(searchTerm);
-    
-
-        searchInput.value = '';
-    
-
-        displayMeals(searchedMeals);
-    });
-    
 
     async function fetchRandomMeal() {
-    const apiUrl = 'https://www.themealdb.com/api/json/v1/1/random.php';
+        const apiUrl = 'https://www.themealdb.com/api/json/v1/1/random.php';
 
-    try {
-        const response = await fetch(apiUrl);
+        try {
+            const response = await fetch(apiUrl);
 
-        if (!response.ok) {
-            throw new Error(`Failed to fetch data. Status: ${response.status}`);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch data. Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.meals ? data.meals[0] : null; 
+        } catch (error) {
+            console.error('Error fetching data:', error.message);
+            return null;
         }
-
-        const data = await response.json();
-        return data.meals ? data.meals[0] : null; 
-    } catch (error) {
-        console.error('Error fetching data:', error.message);
-        return null;
     }
-}
 
-// Function to display a random meal on the page
-async function displayRandomMealDetails(mealId) {
-    const mealDetailsUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`;
+    async function displayRandomMealDetails(mealId) {
+        const mealDetailsUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`;
 
-    try {
-        const response = await fetch(mealDetailsUrl);
-        const data = await response.json();
+        try {
+            const response = await fetch(mealDetailsUrl);
+            const data = await response.json();
 
-        if (data.meals && data.meals.length > 0) {
-            const meal = data.meals[0];
+            if (data.meals && data.meals.length > 0) {
+                const meal = data.meals[0];
 
-            document.getElementById('modal-image').src = meal.strMealThumb;
-            document.getElementById('modal-title').textContent = meal.strMeal;
-            document.getElementById('modal-ingredients').innerHTML = getIngredientsList(meal);
-            document.getElementById('modal-instructions').textContent = meal.strInstructions;
+                document.getElementById('modal-image').src = meal.strMealThumb;
+                document.getElementById('modal-title').textContent = meal.strMeal;
+                document.getElementById('modal-ingredients').innerHTML = getIngredientsList(meal);
+                document.getElementById('modal-instructions').textContent = meal.strInstructions;
 
-            modal.style.display = 'block';
-        } else {
-            console.error('Meal details not found.');
+                modal.style.display = 'block';
+            } else {
+                console.error('Meal details not found.');
+            }
+        } catch (error) {
+            console.error('Error fetching meal details:', error);
         }
-    } catch (error) {
-        console.error('Error fetching meal details:', error);
     }
-}
 
-async function displayRandomMeal() {
-    const resultContainer = document.getElementById('random-meal');
+    async function displayRandomMeal() {
+        resultContainer.innerHTML = '';
 
-    resultContainer.innerHTML = '';
+        try {
+            const meal = await fetchRandomMeal();
 
-    try {
-        const meal = await fetchRandomMeal();
-
-        if (meal) {
-            resultContainer.innerHTML = `
-                <div onclick="displayRandomMealDetails('${meal.idMeal}')">
+            if (meal) {
+                const randomMealContainer = document.createElement('div');
+                randomMealContainer.innerHTML = `
                     <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
                     <br>
                     <span>--------------------------</span>
                     <h4>${meal.strMeal}</h4>
-                </div>
-            `;
-        } else {
-            resultContainer.innerHTML = '<p>No random meal found.</p>';
+                `;
+
+                randomMealContainer.addEventListener('click', () => {
+                    displayRandomMealDetails(meal.idMeal);
+                });
+
+                resultContainer.appendChild(randomMealContainer);
+            } else {
+                resultContainer.innerHTML = '<p>No random meal found.</p>';
+            }
+        } catch (error) {
+            console.error('Error:', error);
         }
-    } catch (error) {
-        console.error('Error:', error);
     }
-}
 
-
-
-
-window.addEventListener('load', displayRandomMeal);
+    window.addEventListener('load', displayRandomMeal);
 
     function createMealCard(meal) {
         return `
@@ -188,15 +165,14 @@ window.addEventListener('load', displayRandomMeal);
         `;
     }
 
-    
     function displayMeals(meals) {
         categoriesContainer.innerHTML = '';
-    
+
         meals.forEach(meal => {
             const mealCard = createMealCard(meal);
             categoriesContainer.innerHTML += mealCard;
         });
-    
+
         categoriesContainer.style.display = "grid";
         
         categoriesContainer.focus();
@@ -205,7 +181,6 @@ window.addEventListener('load', displayRandomMeal);
             behavior: 'smooth',
             block: 'start',
         });
-    
 
         document.querySelectorAll('.meal-card').forEach(card => {
             card.addEventListener('click', () => {
@@ -214,9 +189,6 @@ window.addEventListener('load', displayRandomMeal);
             });
         });
     }
-
-
-
 
     async function fetchMealsByCategory(category) {
         const categoryUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
