@@ -92,8 +92,8 @@ async function displayRandomMeal() {
                 <div>
                     <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
                     <br>
-                    <span>---------------------------</span>
-                    <h3>${meal.strMeal}</h3>
+                    <span>--------------------------</span>
+                    <h4>${meal.strMeal}</h4>
                 </div>
             `;
         } else {
