@@ -590,12 +590,12 @@ footer{
     }
 
     #home-logo img {
-        width: 150px; 
+        width: 120px; 
     }
 
     .search-div {
         width: 50%; 
-        padding-left: 100px;
+        padding-left: 80px;
     }
 
     #search-input {
@@ -657,7 +657,7 @@ footer{
 
     #let-cook {
         width: 50%;
-        height: 100%; 
+        height: 20%; 
     }
 
     #let-cook > a {
@@ -667,7 +667,7 @@ footer{
     }
 
     #let-cook img{
-        width: 50px;
+        width: 30px;
     }
 
     #content-container {
