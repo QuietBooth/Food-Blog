@@ -581,7 +581,7 @@ nav{
     height: 30px;
     background: rgb(200, 168, 20);
     border-radius: 10px;
-    color:rgb(30, 10, 90);
+    color:black;
     top: 30px;
     text-align: center;
     font-size: 20px;
@@ -648,6 +648,8 @@ footer small {
 
 
 @media only screen and (max-width: 768px) {
+
+
     body {
         background-size: cover; 
     }
@@ -860,6 +862,21 @@ footer small {
     .popup__text h3 {
         text-align: center;
         font-size: 20px; 
+    }
+
+    .close{
+        position: fixed;
+        margin-left: 80px;
+        width: 30%;
+        height: 30px;
+        background: rgb(200, 168, 20);
+        border-radius: 10px;
+        color:black;
+        top: 30px;
+        text-align: center;
+        font-size: 20px;
+        cursor: pointer;
+        transition: transform .5s ease-in-out;
     }
 
 }
